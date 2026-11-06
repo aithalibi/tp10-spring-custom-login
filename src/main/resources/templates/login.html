@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments :: head('Connexion')}"></head>
+<body>
+<div class="login-wrapper">
+    <div class="login-boite">
+        <h2>Authentification</h2>
+        <p class="sous-titre">Formulaire personnalise &mdash; POST vers <code>/authenticate</code></p>
+
+        <div class="alerte alerte-erreur" th:if="${param.error}">
+            Identifiants incorrects, veuillez reessayer.
+        </div>
+        <div class="alerte alerte-succes" th:if="${param.logout}">
+            Vous etes deconnecte avec succes.
+        </div>
+
+        <form th:action="@{/authenticate}" method="post">
+            <div class="champ">
+                <label for="username">Nom d'utilisateur</label>
+                <input type="text" id="username" name="username"
+                       placeholder="user ou admin" required autofocus>
+            </div>
+            <div class="champ">
+                <label for="password">Mot de passe</label>
+                <input type="password" id="password" name="password"
+                       placeholder="Mot de passe" required>
+            </div>
+            <button type="submit" class="bouton">Se connecter</button>
+        </form>
+
+        <p style="text-align:center;margin-top:20px;font-size:13px;color:var(--texte-doux)">
+            Comptes de demonstration : <code>user / 1111</code> &middot; <code>admin / 1234</code>
+        </p>
+    </div>
+</div>
+</body>
+</html>

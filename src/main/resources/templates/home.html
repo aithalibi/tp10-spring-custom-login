@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="~{fragments :: head('Accueil')}"></head>
+<body>
+<header th:replace="~{fragments :: barre}"></header>
+
+<main class="conteneur">
+    <div class="carte">
+        <span class="badge badge-user" th:text="'Connecte : ' + ${utilisateur}">Connecte</span>
+        <h1 style="margin-top:14px">Bienvenue dans l'application securisee</h1>
+        <p class="intro">
+            Connexion reussie. Spring Security a valide vos identifiants puis a stocke
+            l'objet <code>Authentication</code> dans le <code>SecurityContext</code>
+            avant de vous rediriger vers <code>/home</code>.
+        </p>
+
+        <table class="comptes">
+            <thead>
+            <tr><th>Information</th><th>Valeur</th></tr>
+            </thead>
+            <tbody>
+            <tr><td>Utilisateur</td><td th:text="${utilisateur}">user</td></tr>
+            <tr><td>Autorites</td><td th:text="${autorites}">[ROLE_USER]</td></tr>
+            <tr><td>URL de traitement du formulaire</td><td><code>/authenticate</code></td></tr>
+            <tr><td>Redirection apres succes</td><td><code>/home</code> (alwaysUse = true)</td></tr>
+            </tbody>
+        </table>
+
+        <ul class="liste-liens">
+            <li><a th:href="@{/user/dashboard}">Espace Utilisateur (USER et ADMIN)</a></li>
+            <li sec:authorize="hasRole('ADMIN')">
+                <a th:href="@{/admin/dashboard}">Espace Administrateur (ADMIN)</a>
+            </li>
+        </ul>
+
+        <form th:action="@{/logout}" method="post" style="margin-top:24px">
+            <button type="submit" class="bouton">Se deconnecter</button>
+        </form>
+    </div>
+    <p class="pied">TP 10 &mdash; Formulaire de connexion personnalise avec Spring Security</p>
+</main>
+</body>
+</html>
